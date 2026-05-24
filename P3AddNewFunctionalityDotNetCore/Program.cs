@@ -14,6 +14,7 @@ using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//test git
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
