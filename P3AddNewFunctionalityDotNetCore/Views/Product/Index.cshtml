@@ -15,10 +15,10 @@
                 <th>
                     <label>@Localizer["Description"]</label>
                 </th>
-                <th>
+                <th style="text-align:center">
                     <label>@Localizer["Price"]</label>
                 </th>
-                <th>
+                <th style="text-align:center">
                     <label>@Localizer["Stock"]</label>
                 </th>
             </tr>
@@ -27,11 +27,11 @@
             @foreach (ProductViewModel p in Model)
             {
                 <tr>
-                    <td>@p.Name</td>
-                    <td>@p.Description</td>
-                    <td style="text-align:center">@p.Price</td>
-                    <td style="text-align:center">@p.Stock</td>
-                    <td>
+                    <td class="align-middle">@p.Name</td>
+                    <td class="align-middle">@p.Description</td>
+                    <td style="text-align:center" class="align-middle">@p.Price</td>
+                    <td style="text-align:center" class="align-middle">@p.Stock</td>
+                    <td style="text-align:center" class="align-middle">
                         <form id="@p.Id" asp-action="AddToCart" asp-controller="Cart" method="post">
                             <input type="hidden" name="id" value="@p.Id" />
                             <button type="submit" class="btn btn-primary">

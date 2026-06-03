@@ -4,8 +4,10 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet"
           asp-href-include="/lib/bootstrap/**/*.min.css"
+          asp-href-include="/css/site.css"
           asp-href-exclude="**/*-reboot*,**/*-grid*" />
     <link rel="stylesheet" asp-href-include="/lib/fontawesome/css/*.css" />
+    <link rel="stylesheet" asp-href-include="/css/utility.css" />
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -20,15 +22,21 @@
                         @Localizer["Administrator"]
                     </a>
                 </div>
-                <div class="col-7">
+                <div class="col-9">
+                    <div class="container d-flex justify-content-between align-items-center">
                     <a class="navbar-brand text-white fs-4" asp-action="Index" asp-controller="Product">
                         OpenClassrooms shop
                     </a>
-                </div>          
+                        <div class="align-items-center pe-0">
+                            @await Component.InvokeAsync("CartSummary")
+                        </div>
+                    </div>
+                </div> 
+                
                 <div class="col">
-                    @await Component.InvokeAsync("CartSummary")
+                    <!--@await Component.InvokeAsync("CartSummary") -->
                 </div>
-
+               
             </div>
         </div>
     </div>
