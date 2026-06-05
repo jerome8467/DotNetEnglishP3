@@ -2,3 +2,51 @@
     border : 0px solid red;
     padding : 30px 0px;
 }
+
+.margin-top-xs{
+    margin-top:5px;
+}
+
+.margin-top-s {
+    margin-top: 10px;
+}
+
+.margin-top-m {
+    margin-top: 15px;
+}
+
+.margin-top-l {
+    margin-top: 20px;
+}
+
+.margin-top-xl {
+    margin-top: 25px;
+}
+
+.margin-top-xxl {
+    margin-top: 30px;
+}
+
+.margin-bottom-xs {
+    margin-bottom: 5px;
+}
+
+.margin-bottom-s {
+    margin-bottom: 10px;
+}
+
+.margin-bottom-m {
+    margin-bottom: 15px;
+}
+
+.margin-bottom-l {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-xl {
+    margin-bottom: 25px;
+}
+
+.margin-bottom-xxl {
+    margin-bottom: 30px;
+}

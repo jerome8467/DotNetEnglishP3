@@ -29,7 +29,7 @@
                 <tr>
                     <td class="align-middle">@p.Name</td>
                     <td class="align-middle">@p.Description</td>
-                    <td style="text-align:center" class="align-middle">@p.Price</td>
+                    <td style="text-align:center" class="align-middle">@p.Price?.ToString("c")</td>
                     <td style="text-align:center" class="align-middle">@p.Stock</td>
                     <td style="text-align:center" class="align-middle">
                         <form id="@p.Id" asp-action="AddToCart" asp-controller="Cart" method="post">

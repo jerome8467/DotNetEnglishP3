@@ -8,7 +8,7 @@
 <br />
 <div id="panel-body">
     <a class="btn btn-primary" asp-action="Create" asp-controller="Product">@Localizer["Create"]</a>
-    <table class="table table-bordered table-striped table-sm">
+    <table class="table table-bordered table-striped table-sm  margin-top-m">
         <thead>
             <tr>
                 <th>
@@ -17,13 +17,13 @@
                 <th>
                     <label>@Localizer["Description"]</label>
                 </th>
-                <th>
+                <th >
                     <label>@Localizer["Price"]</label>
                 </th>
-                <th>
+                <th >
                     <label>@Localizer["Stock"]</label>
                 </th>
-                <th>
+                <th >
                     <label>@Localizer["Details"]</label>
                 </th>
             </tr>
@@ -32,11 +32,11 @@
             @foreach (ProductViewModel p in Model)
             {
             <tr>
-                <td>@p.Name</td>
-                <td>@p.Description</td>
-                <td style="text-align:center">@p.Price</td>
-                <td style="text-align:center">@p.Stock</td>
-                <td>@p.Details</td>
+                    <td class="align-middle" class="align-middle">@p.Name</td>
+                    <td class="align-middle" class="align-middle">@p.Description</td>
+                    <td style="text-align:center" class="align-middle">@p.Price?.ToString("c")</td>
+                    <td style="text-align:center" class="align-middle">@p.Stock</td>
+                    <td class="align-middle">@p.Details</td>
                 <td>
                     <form id="@p.Id" asp-action="DeleteProduct" asp-controller="Product" method="post">
                         <input type="hidden" name="id" value="@p.Id" />

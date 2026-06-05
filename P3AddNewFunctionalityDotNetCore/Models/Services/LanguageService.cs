@@ -32,7 +32,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
                     culture = "es-ES";
                     break;
                 default:
-                    culture = "en";
+                    culture = "en-GB";
                     break;
             }
             

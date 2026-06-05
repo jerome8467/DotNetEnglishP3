@@ -3,31 +3,36 @@
     ViewData["Title"] = Localizer["CreatProductTitle"];
     Layout = "_AdminLayout";
 }
+<div class="container body-content form-login-create">
+<form asp-action="Create" method="post" class="margin-top-xxl">
+        <div class="text-danger mt-4" asp-validation-summary="ModelOnly"></div>
 
-<div asp-validation-summary="All" class="text-danger"></div>
-<form asp-action="Create" method="post">
-    <div class="mb-3 col-6">
+    <div class="mb-3">
         <label>@Localizer["Name"]*:</label>
         <input asp-for="Name" class="form-control" />
+            <div><span asp-validation-for="Name" class="text-danger"></span></div>
     </div>
-    <div class="mb-3 col-4">
+    <div class="mb-3">
         <label>@Localizer["Price"]*:</label>
         <input asp-for="Price" class="form-control" />
+            <div><span asp-validation-for="Price" class="text-danger"></span></div>
     </div>
-    <div class="mb-3 col-8">
+    <div class="mb-3">
         <label>@Localizer["Description"]:</label>
         <input asp-for="Description" class="form-control" />
     </div>
-    <div class="mb-3 col-4">
+    <div class="mb-3">
         <label>@Localizer["Stock"]*:</label>
         <input asp-for="Stock" type="text" class="form-control" />
+            <div><span asp-validation-for="Stock" class="text-danger"></span></div>
     </div>
-    <div class="mb-3col-8">
+    <div class="mb-3">
         <label>@Localizer["Details"]:</label>
         <input asp-for="Details" class="form-control" />
     </div>
-    <div class="text-center">
+    <div class="text-end">
         <input class="btn btn-primary" type="submit" value="@Localizer["OK"]" />
     </div>
 </form>
+</div>
 

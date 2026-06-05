@@ -40,8 +40,8 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
                 products.Add(new ProductViewModel
                 {
                     Id = product.Id,
-                    Stock = product.Quantity.ToString(),
-                    Price = product.Price.ToString(CultureInfo.InvariantCulture),
+                    Stock = product.Quantity,
+                    Price = product.Price,
                     Name = product.Name,
                     Description = product.Description,
                     Details = product.Details
@@ -91,7 +91,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
 
         // TODO this is an example method, remove it and perform model validation using data annotations
-        public List<string> CheckProductModelErrors(ProductViewModel product)
+        /*public List<string> CheckProductModelErrors(ProductViewModel product)
         {
             List<string> modelErrors = new List<string>();
             if (product.Name == null || string.IsNullOrWhiteSpace(product.Name))
@@ -130,7 +130,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             }
 
             return modelErrors;
-        }
+        }*/
 
         public void SaveProduct(ProductViewModel product)
         {
@@ -143,8 +143,8 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             Product productEntity = new Product
             {
                 Name = product.Name,
-                Price = double.Parse(product.Price),
-                Quantity = Int32.Parse(product.Stock),
+                Price = product.Price.Value,
+                Quantity = product.Stock.Value,
                 Description = product.Description,
                 Details = product.Details
             };
