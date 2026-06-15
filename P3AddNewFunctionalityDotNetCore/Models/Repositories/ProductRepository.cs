@@ -32,6 +32,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
         public IEnumerable<Product> GetAllProducts()
         {
             IEnumerable<Product> productEntities= _context.Product.Where(p => p.Id > 0);
+            
             return productEntities.ToList();
         }
 
@@ -44,7 +45,10 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
             product.Quantity = product.Quantity - quantityToRemove;
 
             if (product.Quantity == 0)
+            { 
                 _context.Product.Remove(product);
+                _context.SaveChanges();
+            }
             else
             {
                 _context.Product.Update(product);

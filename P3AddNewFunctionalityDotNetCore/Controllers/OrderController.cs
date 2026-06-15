@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using P3AddNewFunctionalityDotNetCore.Models;
 using P3AddNewFunctionalityDotNetCore.Models.Services;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using P3AddNewFunctionalityDotNetCore.Models.Entities;
 
 namespace P3AddNewFunctionalityDotNetCore.Controllers
 {
@@ -12,12 +13,14 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         private readonly ICart _cart;
         private readonly IOrderService _orderService;
         private readonly IStringLocalizer<OrderController> _localizer;
+        private readonly IProductService _productService;
 
-        public OrderController(ICart cart, IOrderService service, IStringLocalizer<OrderController> localizer)
+        public OrderController(ICart cart, IOrderService service, IStringLocalizer<OrderController> localizer, IProductService productservice)
         {
             _cart = cart;
             _orderService = service;
             _localizer = localizer;
+            _productService = productservice;
         }
 
         public ViewResult Index()
@@ -35,8 +38,30 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
             if (ModelState.IsValid)
             {
                 order.Lines = ((Cart) _cart)?.Lines.ToArray();
-                _orderService.SaveOrder(order);
-                return RedirectToAction(nameof(Completed));
+                foreach (CartLine line in order.Lines)
+                {
+                    Product product = _productService.GetProductById(line.Product.Id);
+                    if (product != null) {
+                        if (line.Quantity > product.Quantity)
+                        {
+                            ModelState.AddModelError("", _localizer["StockChange"]);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        _cart.RemoveLine(line.Product);
+                        ModelState.AddModelError("", _localizer["ProductDelete"]);
+                        break;
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    _orderService.SaveOrder(order);
+                    return RedirectToAction(nameof(Completed));
+                }
+                else { return View(order); }
             }
             else
             {

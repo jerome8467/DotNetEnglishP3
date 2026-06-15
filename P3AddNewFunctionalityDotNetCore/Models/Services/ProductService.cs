@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
+﻿//using System;
+//using Microsoft.Extensions.Localization;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using P3AddNewFunctionalityDotNetCore.Models.Repositories;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using System;
+using System.Collections.Generic;
+//using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.Services
 {
@@ -14,16 +15,16 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
     {
         private readonly ICart _cart;
         private readonly IProductRepository _productRepository;
-        private readonly IOrderRepository _orderRepository;
-        private readonly IStringLocalizer<ProductService> _localizer;
+        //private readonly IOrderRepository _orderRepository;
+        //private readonly IStringLocalizer<ProductService> _localizer;
 
-        public ProductService(ICart cart, IProductRepository productRepository,
-            IOrderRepository orderRepository, IStringLocalizer<ProductService> localizer)
+        public ProductService(ICart cart, IProductRepository productRepository/*,
+            IOrderRepository orderRepository, IStringLocalizer<ProductService> localizer*/)
         {
             _cart = cart;
             _productRepository = productRepository;
-            _orderRepository = orderRepository;
-            _localizer = localizer;
+            //_orderRepository = orderRepository;
+            //_localizer = localizer;
         }
         public List<ProductViewModel> GetAllProductsViewModel()
         {
@@ -40,7 +41,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
                 products.Add(new ProductViewModel
                 {
                     Id = product.Id,
-                    Stock = product.Quantity,
+                    Stock = product.Quantity.ToString(),
                     Price = product.Price,
                     Name = product.Name,
                     Description = product.Description,
@@ -90,47 +91,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             }
         }
 
-        // TODO this is an example method, remove it and perform model validation using data annotations
-        /*public List<string> CheckProductModelErrors(ProductViewModel product)
-        {
-            List<string> modelErrors = new List<string>();
-            if (product.Name == null || string.IsNullOrWhiteSpace(product.Name))
-            {
-                modelErrors.Add(_localizer["MissingName"]);
-            }
-
-            if (product.Price == null || string.IsNullOrWhiteSpace(product.Price))
-            {
-                modelErrors.Add(_localizer["MissingPrice"]);
-            }
-
-            if (!Double.TryParse(product.Price, out double pc))
-            {
-                modelErrors.Add(_localizer["PriceNotANumber"]);
-            }
-            else
-            {
-                if (pc <= 0)
-                    modelErrors.Add(_localizer["PriceNotGreaterThanZero"]);
-            }
-
-            if (product.Stock == null || string.IsNullOrWhiteSpace(product.Stock))
-            {
-                modelErrors.Add(_localizer["MissingQuantity"]);
-            }
-
-            if (!int.TryParse(product.Stock, out int qt))
-            {
-                modelErrors.Add(_localizer["StockNotAnInteger"]);
-            }
-            else
-            {
-                if (qt <= 0)
-                    modelErrors.Add(_localizer["StockNotGreaterThanZero"]);
-            }
-
-            return modelErrors;
-        }*/
 
         public void SaveProduct(ProductViewModel product)
         {
@@ -144,7 +104,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             {
                 Name = product.Name,
                 Price = product.Price.Value,
-                Quantity = product.Stock.Value,
+                Quantity = Convert.ToInt32(product.Stock),
                 Description = product.Description,
                 Details = product.Details
             };
@@ -157,7 +117,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             // delete the product form the cart by using the specific method
             // => the choice is up to the student
             _cart.RemoveLine(GetProductById(id));
-
             _productRepository.DeleteProduct(id);
         }
     }

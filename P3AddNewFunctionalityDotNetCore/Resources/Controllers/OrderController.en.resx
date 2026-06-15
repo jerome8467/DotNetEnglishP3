@@ -120,4 +120,10 @@
   <data name="CartEmpty" xml:space="preserve">
     <value>Sorry, your cart is empty !</value>
   </data>
+  <data name="ProductDelete" xml:space="preserve">
+    <value>Sorry, one of the products in your cart is no longer available.</value>
+  </data>
+  <data name="StockChange" xml:space="preserve">
+    <value>Sorry, the stock has changed</value>
+  </data>
 </root>
