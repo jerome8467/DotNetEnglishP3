@@ -1,6 +1,4 @@
-﻿
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using System.Collections;
+﻿using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using System.Collections.Generic;
 
 namespace P3AddNewFunctionalityDotNetCore.Models

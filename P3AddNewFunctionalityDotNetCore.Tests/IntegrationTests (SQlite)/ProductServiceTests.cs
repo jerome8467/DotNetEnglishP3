@@ -13,19 +13,20 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.IntegrationTests
 
     public class ProductServiceTests
     {
-        private DbContextOptions<P3Referential> _context;
+        private DbContextOptions<P3Referential> _dbContextOptions;
         private P3Referential _dbContext;
         private ICart _cart; 
         private IProductRepository _productRepository;
         private IProductService _productService;
 
+
         public ProductServiceTests()
         {
-            _context = new DbContextOptionsBuilder<P3Referential>()
+            _dbContextOptions = new DbContextOptionsBuilder<P3Referential>()
             .UseSqlite("Data Source=:memory:")
             .Options;
 
-            _dbContext = new P3Referential(_context, null);
+            _dbContext = new P3Referential(_dbContextOptions, null);
             _dbContext.Database.OpenConnection();
             _dbContext.Database.EnsureCreated();
 
@@ -47,6 +48,10 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.IntegrationTests
             return productEntity;
         }
 
+        /// <summary>
+        /// Integration tests for ProductService using SQLite in-memory database.
+        /// Tests cover product add, delete and availability for customer view and cart.
+        /// </summary>
 
         [Fact]
         public void Add_Product()

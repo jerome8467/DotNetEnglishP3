@@ -28,10 +28,11 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         {
             Product product = _productService.GetProductById(id);
 
-            CartLine line = _cart.Lines.FirstOrDefault(p => p.Product.Id == product.Id);
-
             if (product != null)
             {
+
+                CartLine line = _cart.Lines.FirstOrDefault(p => p.Product.Id == product.Id);
+
                 if(line == null || product.Quantity > line.Quantity) {
                 _cart.AddItem(product, 1);
                     return RedirectToAction("Index");

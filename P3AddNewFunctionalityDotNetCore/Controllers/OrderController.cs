@@ -15,12 +15,12 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         private readonly IStringLocalizer<OrderController> _localizer;
         private readonly IProductService _productService;
 
-        public OrderController(ICart cart, IOrderService service, IStringLocalizer<OrderController> localizer, IProductService productservice)
+        public OrderController(ICart cart, IOrderService service, IStringLocalizer<OrderController> localizer, IProductService productService)
         {
             _cart = cart;
             _orderService = service;
             _localizer = localizer;
-            _productService = productservice;
+            _productService = productService;
         }
 
         public ViewResult Index()
@@ -31,13 +31,13 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         [HttpPost]
         public IActionResult Index(OrderViewModel order)
         {
-            if (!((Cart) _cart).Lines.Any())
+            if (!_cart.Lines.Any())
             {
                 ModelState.AddModelError("", _localizer["CartEmpty"]);
             }
             if (ModelState.IsValid)
             {
-                order.Lines = ((Cart) _cart)?.Lines.ToArray();
+                order.Lines = _cart.Lines.ToArray();
                 foreach (CartLine line in order.Lines)
                 {
                     Product product = _productService.GetProductById(line.Product.Id);

@@ -9,7 +9,7 @@ namespace P3AddNewFunctionalityDotNetCore.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (string.IsNullOrWhiteSpace(value?.ToString())) 
-                return new ValidationResult(ProductService.MissingStock, new [] { "Stock" });
+                return new ValidationResult(ProductService.MissingStock, new[] { "Stock" });
 
             if (!int.TryParse(value.ToString(), out int stock))
                 return new ValidationResult(ProductService.StockNotAnInteger, new[] { "Stock" });

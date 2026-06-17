@@ -10,12 +10,10 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly ILanguageService _languageService;
 
-        public ProductController(IProductService productService, ILanguageService languageService)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _languageService = languageService;
         }
 
         public IActionResult Index()
@@ -40,13 +38,6 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
-            /*List<string> modelErrors = _productService.CheckProductModelErrors(product);           
-
-            foreach (string error in modelErrors)
-            {
-                ModelState.AddModelError("", error);
-            }*/
-
             if (ModelState.IsValid)
             {
                 _productService.SaveProduct(product);

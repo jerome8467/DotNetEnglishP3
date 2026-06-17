@@ -1,11 +1,8 @@
-﻿//using System;
-//using Microsoft.Extensions.Localization;
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
+﻿using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using P3AddNewFunctionalityDotNetCore.Models.Repositories;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
-//using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,16 +12,11 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
     {
         private readonly ICart _cart;
         private readonly IProductRepository _productRepository;
-        //private readonly IOrderRepository _orderRepository;
-        //private readonly IStringLocalizer<ProductService> _localizer;
 
-        public ProductService(ICart cart, IProductRepository productRepository/*,
-            IOrderRepository orderRepository, IStringLocalizer<ProductService> localizer*/)
+        public ProductService(ICart cart, IProductRepository productRepository)
         {
             _cart = cart;
             _productRepository = productRepository;
-            //_orderRepository = orderRepository;
-            //_localizer = localizer;
         }
         public List<ProductViewModel> GetAllProductsViewModel()
         {
@@ -84,8 +76,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
         public void UpdateProductQuantities()
         {
-            Cart cart = (Cart) _cart;
-            foreach (CartLine line in cart.Lines)
+            foreach (CartLine line in _cart.Lines)
             {
                 _productRepository.UpdateProductStocks(line.Product.Id, line.Quantity);
             }
@@ -113,9 +104,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         public void DeleteProduct(int id)
         {
-            // TODO what happens if a product has been added to a cart and has been later removed from the inventory ?
-            // delete the product form the cart by using the specific method
-            // => the choice is up to the student
             _cart.RemoveLine(GetProductById(id));
             _productRepository.DeleteProduct(id);
         }

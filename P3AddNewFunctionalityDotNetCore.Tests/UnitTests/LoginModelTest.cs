@@ -15,7 +15,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         private string validateName;
         private string validatePassword;
 
-        public void ValidateLoginModel(LoginModel model)
+        private void ValidateLoginModel(LoginModel model)
         {
             validateName = "";
             validatePassword = "";

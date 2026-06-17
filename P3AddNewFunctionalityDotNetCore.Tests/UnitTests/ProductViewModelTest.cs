@@ -18,10 +18,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         private string validateStock;
         private string validatePrice;
 
-        /// <summary>
-        /// Validates the ProductViewModel and stores the result for each field.
-        /// </summary>
-        public void ValidateProductModel(ProductViewModel model)
+        private void ValidateProductModel(ProductViewModel model)
         {
             validateName = null;
             validateStock = null;
@@ -43,6 +40,10 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
             if (priceError != null) { validatePrice = priceError.ErrorMessage; }
             else { validatePrice = "PriceValid"; }
         }
+
+        /// <summary>
+        /// Validates the ProductViewModel and stores the result for each field.
+        /// </summary>
 
         [Fact]
         public void AddProduct_With_NameEmpty() 

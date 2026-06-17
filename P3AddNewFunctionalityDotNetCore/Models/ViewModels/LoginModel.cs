@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using P3AddNewFunctionalityDotNetCore.Resources.Models.ViewModels;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
