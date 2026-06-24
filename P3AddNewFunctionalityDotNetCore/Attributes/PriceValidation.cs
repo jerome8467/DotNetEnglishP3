@@ -9,8 +9,6 @@ namespace P3AddNewFunctionalityDotNetCore.Attributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            /*if (string.IsNullOrWhiteSpace(value?.ToString())) 
-                return new ValidationResult(ProductService.MissingPrice, new[] { "Price" });*/
 
             if (!double.TryParse(value?.ToString(), out double price))
                 return new ValidationResult(ProductService.PriceNotANumber, new[] { "Price" });
