@@ -40,7 +40,6 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         public IActionResult Create(ProductViewModel product)
         {
             List<ValidationResult> errors = _productService.SaveProduct(product);
-
             foreach (var error in errors)
             {
                 foreach (var memberName in error.MemberNames) 

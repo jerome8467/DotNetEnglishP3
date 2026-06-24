@@ -28,10 +28,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.IntegrationTests
         private IProductRepository _productRepository;
         private IProductService _productService;
         private ProductController _productController;
-        
-        private OrderController _orderController;
-        private IStringLocalizer<OrderController> _localizer;
-        private IOrderService _orderService;
 
 
         public ProductServiceIntegration()
@@ -136,6 +132,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.IntegrationTests
             var userResut = _productController.Index() as ViewResult;
             var productList = userResut.Model as IEnumerable<ProductViewModel>;
             var lastProductId = productList.LastOrDefault().Id;
+
             _cartController.AddToCart(lastProductId);
             var lastCartLine = _cart.Lines.LastOrDefault();
 
