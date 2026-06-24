@@ -157,29 +157,26 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.IntegrationTests
             IOrderService _orderService = new OrderService(_cart, _orderRepository , _productService);
             OrderController _orderController = new OrderController(_cart, _orderService, mockLocalizer.Object, _productService);
             ProductViewModel productAdd = new ProductViewModel { Name = "ABC", Stock = "2", Price = "10,50" };
+            OrderViewModel order = new OrderViewModel{Name = "NameTest", Address = "RueTest", City = "VilleTest", Zip = "01234", Country = "PaysTest"};
 
             // ACT
             _productController.Create(productAdd);
             var userResut = _productController.Index() as ViewResult;
             var productList = userResut.Model as IEnumerable<ProductViewModel>;
             var lastProductId = productList.LastOrDefault().Id;
+
             _cartController.AddToCart(lastProductId);
-            OrderViewModel order = new OrderViewModel
-            {
-                Name = "NameTest",
-                Address = "RueTest",
-                City = "VilleTest",
-                Zip = "01234",
-                Country = "PaysTest"
-            };
+           
             _orderController.Index(order);
+
             var orders = _orderService.GetOrders().Result;
             var lastOrder = orders.LastOrDefault();
 
 
             // ASSERT
-            Assert.Contains(lastOrder.OrderLine, i => i.ProductId == lastProductId);
-
+            Assert.Contains(lastOrder.OrderLine, i => i.ProductId == lastProductId 
+                && i.Product.Name == "ABC"
+                && i.Product.Price == 10.5);
         }
 
 
