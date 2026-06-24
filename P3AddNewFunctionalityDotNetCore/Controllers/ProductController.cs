@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using P3AddNewFunctionalityDotNetCore.Models.Services;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace P3AddNewFunctionalityDotNetCore.Controllers
@@ -38,9 +39,18 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         [HttpPost]
         public IActionResult Create(ProductViewModel product)
         {
+            List<ValidationResult> errors = _productService.SaveProduct(product);
+
+            foreach (var error in errors)
+            {
+                foreach (var memberName in error.MemberNames) 
+                {
+                    ModelState.AddModelError(memberName, error.ErrorMessage);
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                _productService.SaveProduct(product);
                 return RedirectToAction("Admin");
             }
             else

@@ -3,6 +3,7 @@ using P3AddNewFunctionalityDotNetCore.Models.Repositories;
 using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,7 +35,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
                 {
                     Id = product.Id,
                     Stock = product.Quantity.ToString(),
-                    Price = product.Price.ToString(),
+                    Price = product.Price.ToString("F2"),
                     Name = product.Name,
                     Description = product.Description,
                     Details = product.Details
@@ -83,11 +84,17 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
 
 
-        public void SaveProduct(ProductViewModel product)
+        public List<ValidationResult> SaveProduct(ProductViewModel product)
         {
+            List<ValidationResult> errors = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(product);
+
+            if (!Validator.TryValidateObject(product, context, errors, true))
+                return errors;
 
             var productToAdd = MapToProductEntity(product);
             _productRepository.SaveProduct(productToAdd);
+            return new List<ValidationResult>();
         }
 
         private static Product MapToProductEntity(ProductViewModel product)
