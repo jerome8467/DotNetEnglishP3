@@ -34,7 +34,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
                 {
                     Id = product.Id,
                     Stock = product.Quantity.ToString(),
-                    Price = product.Price,
+                    Price = product.Price.ToString(),
                     Name = product.Name,
                     Description = product.Description,
                     Details = product.Details
@@ -85,6 +85,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         public void SaveProduct(ProductViewModel product)
         {
+
             var productToAdd = MapToProductEntity(product);
             _productRepository.SaveProduct(productToAdd);
         }
@@ -94,7 +95,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             Product productEntity = new Product
             {
                 Name = product.Name,
-                Price = product.Price.Value,
+                Price = Convert.ToDouble(product.Price),
                 Quantity = Convert.ToInt32(product.Stock),
                 Description = product.Description,
                 Details = product.Details

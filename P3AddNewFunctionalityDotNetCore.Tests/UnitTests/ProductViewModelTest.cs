@@ -1,4 +1,6 @@
 ﻿using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+using P3AddNewFunctionalityDotNetCore.Resources.Models.Services;
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
@@ -45,11 +47,11 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         /// Validates the ProductViewModel and stores the result for each field.
         /// </summary>
 
-        [Fact]
+        /*[Fact]
         public void AddProduct_With_NameEmpty() 
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = null, Stock = "1", Price = 1 };
+            ProductViewModel model = new ProductViewModel { Name = null, Stock = "1", Price = "1" };
 
             // ACT
             ValidateProductModel(model);
@@ -59,13 +61,32 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
             Assert.Equal("StockValid", validateStock);
             Assert.Equal("PriceValid", validatePrice);
 
+        }*/
+
+        [Fact]
+        public void AddProduct_With_NameEmpty()
+        {
+            // ARRANGE
+            var model = new ProductViewModel { Name = null, Stock = "1", Price = "1" };
+            var errors = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+
+            // ACT
+            Validator.TryValidateObject(model, context, errors, true);
+
+            // ASSERT
+            var nameError = errors.FirstOrDefault(e => e.MemberNames.Contains("Name"));
+            Assert.NotNull(nameError);
+            Assert.Equal(ProductService.MissingName, nameError.ErrorMessage);
+            Assert.DoesNotContain(errors, e => e.MemberNames.Contains("Stock"));
+            Assert.DoesNotContain(errors, e => e.MemberNames.Contains("Price"));
         }
 
         [Fact]
         public void AddProduct_With_StockeEmpty()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = null, Price = 1 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = null, Price = "1" };
 
             // ACT
             ValidateProductModel(model);
@@ -81,7 +102,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         public void AddProduct_With_StockZero()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "0", Price = 1 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "0", Price = "1" };
 
             // ACT
             ValidateProductModel(model);
@@ -97,7 +118,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         public void AddProduct_With_StockDouble()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "2.5", Price = 1 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "2.5", Price = "1" };
 
             // ACT
             ValidateProductModel(model);
@@ -113,7 +134,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         public void AddProduct_With_StockNegatif()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "-2", Price = 1 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "-2", Price = "1" };
 
             // ACT
             ValidateProductModel(model);
@@ -145,7 +166,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         public void AddProduct_With_PriceZero()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "1", Price = 0 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "1", Price = "0" };
 
             // ACT
             ValidateProductModel(model);
@@ -161,7 +182,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         public void AddProduct_With_PriceNegatif()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "1", Price = -5 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "1", Price = "-5" };
 
             // ACT
             ValidateProductModel(model);
@@ -177,7 +198,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
         public void AddProduct_With_AllValid()
         {
             // ARRANGE
-            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "1", Price = 1 };
+            ProductViewModel model = new ProductViewModel { Name = "test", Stock = "1", Price = "1" };
 
             // ACT
             ValidateProductModel(model);
@@ -186,6 +207,22 @@ namespace P3AddNewFunctionalityDotNetCore.Tests.UnitTests
             Assert.Equal("NameValid", validateName);
             Assert.Equal("StockValid", validateStock);
             Assert.Equal("PriceValid", validatePrice);
+
+        }
+
+        [Fact]
+        public void AddProduct_With_AllEmpty()
+        {
+            // ARRANGE
+            ProductViewModel model = new ProductViewModel { Name = null, Stock = null, Price = null };
+
+            // ACT
+            ValidateProductModel(model);
+
+            // ASSERT
+            Assert.Equal("Veuillez saisir un nom", validateName);
+            Assert.Equal("Veuillez saisir un stock", validateStock);
+            Assert.Equal("Veuillez saisir un prix", validatePrice);
 
         }
 

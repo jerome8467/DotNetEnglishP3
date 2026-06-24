@@ -17,23 +17,21 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
             ErrorMessageResourceName = "MissingName")]
         public string Name { get; set; }
 
-
         public string Description { get; set; }
         public string Details { get; set; }
 
-
         // INPUT STOCK WITH DATA ANNOTATIONS
+        [Required(ErrorMessageResourceType = typeof(ProductService),
+            ErrorMessageResourceName = "MissingStock")]
         [StockValidation]
         public string Stock { get; set; }
-
 
         // INPUT PRICE WITH DATA ANNOTATIONS
         [Required(ErrorMessageResourceType = typeof(ProductService),
             ErrorMessageResourceName = "MissingPrice")]
-        [Range(1, double.MaxValue, ErrorMessageResourceType = typeof(ProductService),
-            ErrorMessageResourceName = "PriceNotGreaterThanZero")]
-        public double? Price { get; set; }
+        [PriceValidation]
+        public string Price { get; set; }
 
-       
+
     }
 }
